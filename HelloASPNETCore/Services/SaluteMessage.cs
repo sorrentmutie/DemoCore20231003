@@ -10,20 +10,26 @@ public class SaluteMessage: IMessage
 public class RealSaluteMessage : IMessage
 {
     private readonly ITimeService timeService;
+    private readonly IConfiguration configuration;
 
-    public RealSaluteMessage(ITimeService timeService)
+    public RealSaluteMessage(ITimeService timeService, 
+                             IConfiguration configuration)
     {
         this.timeService = timeService;
+        this.configuration = configuration;
     }
 
     public string GetMessage()  
     {
-        if(timeService.GetTime().Hour < 12)
+
+        var a = configuration["Settings:a"];
+
+        if (timeService.GetTime().Hour < 12)
         {
-            return $"{timeService.GetNumberTimes}  Good Morning from RealSaluteMessage";
+            return $"{a} {timeService.GetNumberTimes} {configuration["Saluto"]} from RealSaluteMessage";
         } else
         {
-            return $"{timeService.GetNumberTimes} Good Evening from RealSaluteMessage";
+            return $"{a} {timeService.GetNumberTimes} {configuration["Saluto"]} from RealSaluteMessage";
         }
 
     }   
