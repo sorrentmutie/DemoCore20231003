@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoMVC", "DemoMVC.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoMVC.Core", "..\DemoMVC.Core\DemoMVC.Core.csproj", "{81EBE263-70A4-48DA-B44E-9690DE9EA29F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAPITradizionale", "..\DemoAPITradizionale\DemoAPITradizionale.csproj", "{7947F4BD-8EB5-4F35-948C-405CD5C6BF76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAPITradizionale", "..\DemoAPITradizionale\DemoAPITradizionale.csproj", "{7947F4BD-8EB5-4F35-948C-405CD5C6BF76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAPIMinimal", "..\DemoAPIMinimal\DemoAPIMinimal.csproj", "{431E8045-6930-4FAC-B239-7A1806DA1A45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAPIMinimal", "..\DemoAPIMinimal\DemoAPIMinimal.csproj", "{431E8045-6930-4FAC-B239-7A1806DA1A45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoRazorPages", "..\DemoRazorPages\DemoRazorPages.csproj", "{4DC89858-3A2F-4C37-B51A-C459978CAE3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoEFCore.Infrastructure", "..\DemoEFCore.Infrastructure\DemoEFCore.Infrastructure.csproj", "{30DCDA33-F834-4E1B-AE7C-C31F8ADF34C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{431E8045-6930-4FAC-B239-7A1806DA1A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{431E8045-6930-4FAC-B239-7A1806DA1A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431E8045-6930-4FAC-B239-7A1806DA1A45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC89858-3A2F-4C37-B51A-C459978CAE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC89858-3A2F-4C37-B51A-C459978CAE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC89858-3A2F-4C37-B51A-C459978CAE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC89858-3A2F-4C37-B51A-C459978CAE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30DCDA33-F834-4E1B-AE7C-C31F8ADF34C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30DCDA33-F834-4E1B-AE7C-C31F8ADF34C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30DCDA33-F834-4E1B-AE7C-C31F8ADF34C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30DCDA33-F834-4E1B-AE7C-C31F8ADF34C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

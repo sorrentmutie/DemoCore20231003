@@ -1,11 +1,13 @@
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPeopleData, StaticPeopleData>();
 builder.Services.AddScoped<IProductsData, StaticProductsData>();
+builder.Services.AddScoped<IGenresData, GenresDatabaseService>();
+builder.Services.AddScoped<IMoviesService, MoviesService>();
+builder.Services.AddDbContext<MovieDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 

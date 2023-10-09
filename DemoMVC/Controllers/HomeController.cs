@@ -1,32 +1,51 @@
 ﻿using DemoMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace DemoMVC.Controllers
+namespace DemoMVC.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+    private readonly IMoviesService moviesService;
+
+    public HomeController(ILogger<HomeController> logger,
+        IMoviesService moviesService)
     {
-        private readonly ILogger<HomeController> _logger;
+        _logger = logger;
+        this.moviesService = moviesService;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-        public IActionResult Index()
+    public async Task<IActionResult> Privacy()
+    {
+        var newMovie = new Movie
         {
-            return View();
-        }
+            Description = "A second new movie",
+            IsReleased = true,
+            ReleaseDate = DateTime.Now.AddDays(-4),
+            Title = "Film da piangere",
+            Comments = new HashSet<Comment> {
+                new Comment { Reccomended = true, Text = "Beatiful" },
+                new Comment { Reccomended = false, Text = "Touching" }},
+            Genres = new HashSet<Genre>
+            {
+                new Genre { Name = "Sentimental" }
+            }
+        };
+        await moviesService.AddMovieWithComments(newMovie);
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        return View();
+    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

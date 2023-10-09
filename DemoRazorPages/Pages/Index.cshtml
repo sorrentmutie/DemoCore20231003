@@ -1,0 +1,14 @@
+﻿@page
+@model IndexModel
+
+
+@if(Model.Categories != null)
+{
+    <p>Numero totale di prodotti: @Model.Categories.Count</p>
+    <ul>
+        @foreach(var category in Model.Categories){
+            <li>@category.Name   @category.ProductCount @category.Id</li>
+        }
+    </ul>
+}
+

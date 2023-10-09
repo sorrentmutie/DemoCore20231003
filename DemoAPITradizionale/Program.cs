@@ -1,5 +1,8 @@
 
 
+using DemoEFCore.Infrastructure.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<NorthwindContext>(
+    opzioni => opzioni.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 //builder.Services.AddScoped<IService, ServiceOne>();
 //builder.Services.Add(descriptor);
