@@ -25,7 +25,8 @@ namespace DemoAPITradizionale.Controllers
             //IConfiguration configuration,
             //IOptions<MyJwtOptions> options,
             IOptionsSnapshot<MyJwtOptions> options,
-            IOptionsSnapshot<Features> features
+            IOptionsSnapshot<Features> features,
+            IOptions<MyCustomSettings> config
             )
         {
             _logger = logger;
@@ -37,11 +38,26 @@ namespace DemoAPITradizionale.Controllers
             personalize = features.Get(Features.Personalize);
             recommender = features.Get(Features.Recommender);
 
+            try
+            {
+                var validateOptions = config.Value;
+            }
+            catch (OptionsValidationException ex)
+            {
+
+                foreach (var error in ex.Failures)
+                {
+                    logger.LogError(error);
+                }
+            }
+
         }
 
         [HttpGet("config")]
         public IActionResult Config()
         {
+         
+
             // var result = myJwtOptions is null ? "null" : myJwtOptions.SecretKey;
             var result = recommender?.ApiKey;
 

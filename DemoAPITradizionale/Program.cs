@@ -37,6 +37,10 @@ builder.Services.Configure<Features>(
     Features.Recommender,
     builder.Configuration.GetSection("Features:Recommender"));
 
+builder.Services.AddOptions<MyCustomSettings>()
+    .Bind(builder.Configuration.GetSection("MyCustomSettings"))
+    .ValidateDataAnnotations();
+
 
 var app = builder.Build();
 
