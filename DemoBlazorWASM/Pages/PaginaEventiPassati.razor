@@ -1,0 +1,17 @@
+﻿@page "/eventipassati"
+
+<TabellaEventi Eventi="eventiPassati" Titolo="Eventi passati" OnEliminaEvento="EliminaEventoPassato" />
+
+@code {
+    private List<EventoPubblico> eventiPassati = new()
+    {
+        new EventoPubblico { Id = 1, Name = "Corso Blazor", Date = DateTime.Today.AddDays(-7), Location = "Milano"},
+        new EventoPubblico { Id = 2, Name = "Corso Blazor Avanzato", Date = DateTime.Today.AddDays(-14), Location = "Torino"}
+    };
+
+    private void EliminaEventoPassato(EventoPubblico eventoPubblico)
+    {
+        eventiPassati.Remove(eventoPubblico);
+    }
+
+}

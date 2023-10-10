@@ -1,0 +1,14 @@
+﻿<h3>Il mio primo componente</h3>
+<p> Paragrafo @counter</p>
+<button type="button" class="btn btn-warning" @onclick="() => IncrementCount()"> Incrementa</button>
+
+
+@code {
+    private int counter = 42;
+
+    private void IncrementCount()
+    {
+        counter++;
+    }
+}
+

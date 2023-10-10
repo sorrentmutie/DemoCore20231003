@@ -1,0 +1,48 @@
+﻿@PrimoFrammento
+
+
+<h3>@Titolo</h3>
+
+@if(Eventi != null)
+{
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Luogo</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evento in Eventi)
+            {
+                <tr>
+                    <td>@evento.Id</td>
+                    <td>@evento.Name</td>
+                    <td>@evento.Date</td>
+                    <td>@evento.Location</td>
+                    <td> <button class="btn btn-danger" @onclick="() => OnEliminaEvento.InvokeAsync(evento)">Elimina</button> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} else
+{
+    <p> Non sono disponibili eventi</p>
+}
+
+@SecondoFrammento
+
+
+@code {
+
+    [Parameter] public string Titolo { get; set; } = "Tabella Eventi";
+    [Parameter] public List<EventoPubblico>? Eventi { get; set; }
+    [Parameter] public EventCallback<EventoPubblico> OnEliminaEvento { get; set;}
+    [Parameter] public RenderFragment? PrimoFrammento { get; set; }
+    [Parameter] public RenderFragment? SecondoFrammento { get; set; }
+
+
+}

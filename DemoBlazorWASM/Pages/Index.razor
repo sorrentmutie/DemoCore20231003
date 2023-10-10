@@ -1,0 +1,56 @@
+﻿@page "/"
+@inject IEventiPubblici servizio
+
+<TabellaEventi Eventi="eventi" Titolo="Eventi futuri" OnEliminaEvento="EliminaEvento">
+    <PrimoFrammento>
+        <div>
+            <h3>Prova</h3>
+        </div>
+    </PrimoFrammento>
+    <SecondoFrammento>
+        <div>
+            <h3>Prova 2</h3>
+        </div>
+    </SecondoFrammento>
+</TabellaEventi>
+<button @onclick="() => AggiungiEvento()">Aggiungi evento</button>
+
+<hr/>
+
+@code {
+    protected override void OnInitialized()
+    {
+        eventi = servizio.EstraiEventi();
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
+    private void AggiungiEvento()
+    {
+        var nuovoEvento = new EventoPubblico
+            {
+                Id = 13,
+                Date = DateTime.Today.AddDays(1),
+                Location = "Roma",
+                Name = "Corso Blazor Avanzato"
+            };
+        servizio.AggiungiEvento(nuovoEvento);
+        eventi = servizio.EstraiEventi();
+    }
+
+    private List<EventoPubblico> eventi = new();
+
+    private void EliminaEvento(EventoPubblico evento)
+    {
+        servizio.EliminaEvento(evento.Id);
+    }
+
+}
