@@ -1,19 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoEFCore.Infrastructure.Movies;
+using DemoRazorPages.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DemoRazorPages.Pages
 {
     public class PrivacyModel : PageModel
     {
-        private readonly ILogger<PrivacyModel> _logger;
+        private readonly IGenreDataService dataService;
 
-        public PrivacyModel(ILogger<PrivacyModel> logger)
+        public List<Genre>? Genres { get; set; }
+
+        public PrivacyModel( IGenreDataService dataService)
         {
-            _logger = logger;
+            this.dataService = dataService;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+           Genres = await dataService.GetGenres();
+
+
+           // await dataService.CreateGenre("Demential Comedy");
+
         }
     }
 }

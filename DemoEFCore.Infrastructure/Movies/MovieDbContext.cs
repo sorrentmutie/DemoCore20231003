@@ -16,9 +16,9 @@ public class MovieDbContext: DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-    public DbSet<Genre>? Genres { get; set; }
-    public DbSet<Movie>? Movies { get; set; }
-    public DbSet<Comment>? Comments { get; set; }
-    public DbSet<Actor>? Actors { get; set; }
-    public DbSet<MovieActor>? MoviesActors { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Actor> Actors { get; set; }
+    public DbSet<MovieActor> MoviesActors { get; set; }
 }
