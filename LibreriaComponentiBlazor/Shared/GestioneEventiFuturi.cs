@@ -1,7 +1,7 @@
 ﻿using DemoMVC.Core.EventiPubblici;
 using DemoMVC.Core.Interfaces;
 
-namespace DemoBlazorWASM.Services;
+namespace LibreriaComponentiBlazor.Services;
 
 public class GestioneEventiFuturi : IEventiPubblici
 {
