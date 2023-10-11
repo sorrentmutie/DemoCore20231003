@@ -1,0 +1,29 @@
+﻿@if(Genre.Id == 0){
+    <h3>Aggiunta di un nuovo genere</h3>
+} else
+{
+    <h3>Modifica del genere @Genre.Id</h3>
+}
+
+
+<EditForm Model="Genre" OnValidSubmit="() => OnValidSubmit.InvokeAsync(Genre)">
+    <DataAnnotationsValidator/>
+
+    <div class="form-group">
+        <label for="Nome">Nome</label>
+        <InputText id="Nome" @bind-Value="Genre.Name"/>
+        <ValidationMessage For="@( () => Genre.Name)"></ValidationMessage>
+    </div>
+
+    <button type="submit" class="btn btn-info">OK</button>
+    <button type="button" class="btn btn-warning" @onclick="() => OnCancel.InvokeAsync()">Cancella</button>
+
+</EditForm>
+
+@code {
+
+    [Parameter] public GenresIndexViewModel Genre { get; set; } = new();
+    [Parameter] public EventCallback<GenresIndexViewModel> OnValidSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+}

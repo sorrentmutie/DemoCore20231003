@@ -1,7 +1,10 @@
 using DemoBlazorServer.Data;
 using DemoBlazorServer.Services;
+using DemoEFCore.Infrastructure.Movies;
 using DemoMVC.Core.Interfaces;
+using DemoMVC.Core.Interfaces.Movies;
 using LibreriaComponentiBlazor.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,9 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IEventiPubblici, GestioneEventiFuturi>();
 builder.Services.AddScoped<IWeatherForecasts, WeatherServerService>();
+builder.Services.AddDbContext<MovieDbContext>(opzioni =>
+   opzioni.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IGenresData, ServizioDati>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿@page "/counter"
+@inject IJSRuntime jsRuntime
 
 <PageTitle>Counter</PageTitle>
 
@@ -10,11 +11,43 @@
 
 <TabellaEventi/>
 
+<button @onclick="() => ApriModale()">Apri Modale</button>
+<MyModal Id="@idModale" Title="La mia modale" OnSave="Save">
+    <ChildContent>
+        <h3>Esempio di modale</h3>
+        <p>Ciao a tutti</p>
+    </ChildContent>
+</MyModal>
+
+<Component1></Component1>
+
+
 @code {
     private int currentCount = 0;
+    private string idModale = "example";
+    private ExampleJsInterop? exampleJsInterop;
 
-    private void IncrementCount()
+    protected override void OnInitialized()
+    {
+        exampleJsInterop = new ExampleJsInterop(jsRuntime);
+    }
+
+    private async Task Save()
+    {
+        await jsRuntime.InvokeVoidAsync("chiudiModale");
+    }
+
+    private async Task ApriModale()
+    {
+        await jsRuntime.InvokeVoidAsync("apriModale", idModale);
+    }
+
+    private async Task IncrementCount()
     {
         currentCount++;
+        if(exampleJsInterop != null)
+        {
+            await exampleJsInterop.Prompt("Ciao");
+        }
     }
 }

@@ -65,4 +65,9 @@ public class GenresDatabaseService : IGenresData
              .ToListAsync();
 
     }
+
+    public void Cancel()
+    {
+        throw new NotImplementedException();
+    }
 }

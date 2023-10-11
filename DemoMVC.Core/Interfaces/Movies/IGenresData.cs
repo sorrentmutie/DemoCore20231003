@@ -9,4 +9,5 @@ public interface IGenresData
     Task<int> CreateGenre(GenresCreateViewModel model);
     Task DeleteGenre(int id);
     Task UpdateGenre(int id, string name);
+    void Cancel();
 }

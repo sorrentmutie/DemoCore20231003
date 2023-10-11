@@ -1,0 +1,69 @@
+﻿@page "/esperimenti"
+@using LibreriaComponentiBlazor.JavaScriptHelpers;
+
+@inject IJSRuntime jsRuntime
+
+<h3>Pagina Esperimenti JavaScript</h3>
+<button @onclick="() => EseguiJavaScript()">Esegui JavaScript</button>
+@somma
+
+<button @onclick="ApriMappa">Apri Mappa</button>
+
+<MyMap></MyMap>
+
+<button @onclick="ApriCalendario">Apri Calendario</button>
+
+<MyCalendar></MyCalendar>
+
+@code {
+    private int somma;
+    private MyFirstInteropClass? interop;
+    private HelloInterop? helloInterop;
+
+    protected override void OnInitialized()
+    {
+        interop = new MyFirstInteropClass(jsRuntime);
+        helloInterop = new HelloInterop(jsRuntime);
+    }
+
+    private async Task ApriCalendario()
+    {
+        await jsRuntime.InvokeVoidAsync("showCalendar");
+    }
+
+    private async Task ApriMappa()
+    {
+        await jsRuntime.InvokeVoidAsync("showMap", 40.85, 14.26, 15);
+    }
+
+    private  async Task EseguiJavaScript()
+    {
+        if(interop != null && helloInterop != null)
+        {
+            somma = await interop.FirstFunction(3, 4, 5);
+            await interop.SecondFunction("Mario Rossi");
+            await interop.ThirdFunction();
+            await helloInterop.CallHelloHelperSayHello("Mario Rossi");
+        }
+
+    }
+
+    [JSInvokable]
+    public static Task<int[]> RestituisciArrayAsync()
+    {
+        return Task.FromResult(new int[] { 1, 2, 3, 4, 5 });
+    } 
+
+    [JSInvokable]
+    public static Task<CoordinateGeografiche> RestituisciCoordinateAsync()
+    {
+        return Task.FromResult(new CoordinateGeografiche { Id =42, Latitudine = 40.85, Longitudine = 14.26 });
+    }
+
+    [JSInvokable]
+    public static Task<string> RestituisciTestoPopUp(int id)
+    {
+        return Task.FromResult($"Testo PopUp {id}");
+    }
+
+}

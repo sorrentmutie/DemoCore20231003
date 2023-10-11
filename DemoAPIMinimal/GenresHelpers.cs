@@ -32,6 +32,8 @@ public static class GenresHelpers
 {
     public static async Task<IResult> GetAllGenres(MovieDbContext context)
     {
+        //Thread.Sleep(3000);
+
         var genres = await context.Genres.ToListAsync();
 
         return TypedResults.Ok(genres.genreDTOs());
@@ -49,6 +51,8 @@ public static class GenresHelpers
         var newGenre = genre.FromDTO();
         context.Genres.Add(newGenre);
         await context.SaveChangesAsync();
+        context.Entry(newGenre).State = EntityState.Detached;
+
         return TypedResults.Created($"/genres/{genre.Id}", newGenre.ToDTO());
     }
 
@@ -66,8 +70,8 @@ public static class GenresHelpers
     {
         var genre = await context.Genres.FindAsync(id);
         if (genre == null) return TypedResults.NotFound();
-        // context.Genres.Remove(genre);
-        context.Entry(genre).State = EntityState.Deleted;
+        context.Genres.Remove(genre);
+        //context.Entry(genre).State = EntityState.Deleted;
         await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }

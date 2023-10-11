@@ -3,11 +3,23 @@
 using DemoAPIMinimal;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                      });
+});
+
 
 var app = builder.Build();
 
@@ -19,8 +31,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
 var url = "/genres";
-var genreGroup = app.MapGroup(url);
+var genreGroup = app.MapGroup(url).WithOpenApi(); 
 
 
 
@@ -30,19 +43,10 @@ genreGroup.MapGet("/", GenresHelpers.GetAllGenres);
 genreGroup.MapGet("/{id}", GenresHelpers.GetGenreById);
 genreGroup.MapPost("/", GenresHelpers.CreateGenre);
 genreGroup.MapPut("/{id:int}", GenresHelpers.UpdateGenre);
-genreGroup.MapDelete("/genres/{id:int}", GenresHelpers.DeleteGenre);
+genreGroup.MapDelete("/{id:int}", GenresHelpers.DeleteGenre);
 
 
-//app.MapPatch("/movies/{id:int}", async (int id, Movie movie, MovieDbContext context) =>
-//{
-//    //var movieDb = await context.Movies.FindAsync(id);
-//    //if(movieDb == null) return Results.NotFound();
-//    //context.Entry(movieDb).State = EntityState.Detached;
-//    //context.Entry(movie).State = EntityState.Modified;
-//    context.Movies.Update(movie);
-//    await context.SaveChangesAsync();
-//    return Results.NoContent();    
-//});
 
+app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();

@@ -1,0 +1,29 @@
+﻿
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Genres)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td> 
+                    <button class="btn btn-danger"
+                      @onclick="() => OnCancella.InvokeAsync(item)"> Elimina </button>
+
+                    <button class="btn btn-danger"
+                    @onclick="() => OnModifica.InvokeAsync(item)">
+                        Modifica
+                    </button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

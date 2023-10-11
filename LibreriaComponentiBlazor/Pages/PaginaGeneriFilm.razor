@@ -1,0 +1,80 @@
+﻿@page "/generi"
+
+@inject IGenresData dataService
+
+
+@if(currentGenre != null)
+{
+    <FormDettagli Genre="currentGenre" OnCancel="CancelOperation"
+        OnValidSubmit="Save"></FormDettagli>
+} else
+{
+    <h3>Generi Film</h3>
+    <button class="btn btn-danger" @onclick="() => Cancella()">Cancella Richiesta</button>
+    <button class="btn btn-warning" @onclick="() => AggiungiGenere()">Aggiungi Genere</button>
+    @if (genres != null)
+    {
+        <TabellaGeneriFilm Genres="genres" OnCancella="EliminaGenere"
+            OnModifica="Modifica"/>
+    }
+}
+
+
+
+@code {
+    private List<GenresIndexViewModel>? genres = new List<GenresIndexViewModel>();
+    private GenresIndexViewModel? currentGenre;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        genres = await dataService.GetGenres();
+    }
+
+    private void Cancella()
+    {
+        dataService.Cancel();
+    }
+
+    private void Modifica(GenresIndexViewModel genre)
+    {
+        currentGenre = genre;
+    }
+
+    private async Task EliminaGenere(GenresIndexViewModel genre)
+    {
+        await dataService.DeleteGenre(genre.Id);
+        genres = await dataService.GetGenres();
+    }
+
+    private void CancelOperation()
+    {
+        currentGenre = null;
+    }
+    private void AggiungiGenere()
+    {
+        currentGenre = new GenresIndexViewModel();
+
+        // var genere = new GenresCreateViewModel() {
+        //     Name = "Poliziesco Fantascientifico"};
+        // await dataService.CreateGenre(genere);
+        // genres = await dataService.GetGenres();
+    }
+
+    private async Task Save(GenresIndexViewModel newGenre)
+    {
+        if(newGenre.Id == 0)
+        {
+            await dataService.CreateGenre(new GenresCreateViewModel
+                {
+                    Name = newGenre.Name
+               });
+        } else
+        {
+            await dataService.UpdateGenre(newGenre.Id, newGenre.Name!);
+        }
+        genres = await dataService.GetGenres();
+        currentGenre = null;
+    }
+
+}
